@@ -1,28 +1,23 @@
-import os
-import requests
-import pandas as pd
-
+import os, argparse, requests, pandas as pd
 os.makedirs("test", exist_ok=True)
-
-# Seasons we want
-seasons = {"2022/23", "2023/24"}
-
-# Get bootstrap data
-bootstrap = requests.get("https://fantasy.premierleague.com/api/bootstrap-static/").json()
-teams = {t["id"]: t["name"] for t in bootstrap["teams"]}
-positions = {1: "GK", 2: "DEF", 3: "MID", 4: "FWD"}
-
+ap = argparse.ArgumentParser()
+ap.add_argument("--seasons", type=str, default="2022/23,2023/24")
+ap.add_argument("--out", type=str, default="test/fpl_season_totals_2022_2023.csv")
+a = ap.parse_args()
+seasons = set([s.strip() for s in a.seasons.split(",") if s.strip()])
+b = requests.get("https://fantasy.premierleague.com/api/bootstrap-static/").json()
+teams = {t["id"]: t["name"] for t in b["teams"]}
+pos = {1: "GK", 2: "DEF", 3: "MID", 4: "FWD"}
 rows = []
-
-for player in bootstrap["elements"]:
-    history = requests.get(f"https://fantasy.premierleague.com/api/element-summary/{player['id']}/").json()
-    for s in history.get("history_past", []):
+for p in b["elements"]:
+    h = requests.get(f"https://fantasy.premierleague.com/api/element-summary/{p['id']}/").json().get("history_past", [])
+    for s in h:
         if s["season_name"] in seasons:
             rows.append({
-                "fpl_id": player["id"],
-                "full_name": f"{player['first_name']} {player['second_name']}",
-                "team": teams.get(player["team"]),
-                "position": positions.get(player["element_type"]),
+                "fpl_id": p["id"],
+                "full_name": f"{p['first_name']} {p['second_name']}",
+                "latest_team": teams.get(p["team"]),
+                "position": pos.get(p["element_type"]),
                 "season": s["season_name"],
                 "minutes": s["minutes"],
                 "goals": s["goals_scored"],
@@ -34,10 +29,8 @@ for player in bootstrap["elements"]:
                 "saves": s.get("saves", 0),
                 "penalties_saved": s.get("penalties_saved", 0),
                 "penalties_missed": s.get("penalties_missed", 0),
-                "own_goals": s.get("own_goals", 0)
+                "own_goals": s.get("own_goals", 0),
+                "bonus": s.get("bonus", 0)
             })
-
-df = pd.DataFrame(rows)
-csv_path = "test/fpl_season_totals_2022_2023.csv"
-df.to_csv(csv_path, index=False)
-print(f"✅ Saved to {csv_path} with {len(df)} rows")
+pd.DataFrame(rows).to_csv(a.out, index=False)
+print(a.out)
