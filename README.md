@@ -1,6 +1,6 @@
 # EPL Auction Kit (FPL Scoring)
 
-Build an EPL fantasy **auction board** and printable **draft pack** using official **Fantasy Premier League (FPL) scoring**. No accounts or keys required.
+Build an EPL fantasy **auction board** and printable **draft pack** using official **Fantasy Premier League (FPL) scoring**. No accounts or keys required. Made this to beat my friends in the 25-26 season of EPL Fantasy.
 
 ---
 
