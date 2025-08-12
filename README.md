@@ -30,6 +30,7 @@ python make_draft_pack.py
 
 
 ## League Settings to Change
+in auction_values.py, at the very top
 ```bash
 league_size         # teams in your league. Default: 10
 pos_slots           # starting roster slots per team. Default: {"GK":2,"DEF":5,"MID":5,"FWD":3}
