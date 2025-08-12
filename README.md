@@ -27,6 +27,15 @@ python auction_values.py
 python make_cheatsheets.py
 python make_draft_pack.py
 ```
+
+
+## League Settings to Change
+```bash
+league_size         # teams in your league. Default: 10
+pos_slots           # starting roster slots per team. Default: {"GK":2,"DEF":5,"MID":5,"FWD":3}
+budget_per_team     # auction budget per team. Default: 200
+spend_fraction      # fraction of total league budget allocated to starters in pricing. Default: 0.7
+```
 ## Excel File Lingo
 
 ```bash
@@ -41,8 +50,10 @@ min_2024/25   # Minutes played in 2024/25.
 proj_pts      # Our projected points for the upcoming season, built from a 70/30 blend of per-90 scoring rates (24/25, 23/24), 
               # shrunk toward the position median and scaled by a blended minutes projection.
 rep_dyn       # The replacement level points for that player’s position, based on your league size and roster slots (the projected points of the “last starter” at that position)
+              # Higher number means stronger replacement at that position, reduces VORP for players in that position. Vice versa for lower values
 vorp_dyn      # Value Over Replacement Player = max(0, proj_pts − rep_dyn).
 rec_bid_dyn   # Recommended auction bid ($) derived from VORP, scaled to your league budget and spend fraction.
+              # Higher is better(more worth paying for). $0 means they're at/below replacement given league settings
 tier_dyn      # Position-relative tier based on projected points quantiles (1 = top tier). 
 aav           # Ignore I gotta delete this
 
