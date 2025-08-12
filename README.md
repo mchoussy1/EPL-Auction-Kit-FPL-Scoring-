@@ -18,7 +18,7 @@ source .venv/bin/activate
 # .venv\Scripts\activate
 
 # 3) Install deps
-pip install requirements.txt
+pip install -r requirements.txt
 
 # 4) Run the pipeline (in this order)
 python fpl_pull.py
