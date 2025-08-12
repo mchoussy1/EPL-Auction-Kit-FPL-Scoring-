@@ -4,6 +4,7 @@ league_size=10
 pos_slots={"GK":2,"DEF":5,"MID":5,"FWD":3}
 budget_per_team=200
 spend_fraction=0.7
+
 df=pd.read_csv("data/fpl_espn_scored.csv")
 for c in ["fpl_id","full_name","position","latest_team","2023/24","2024/25","min_2023/24","min_2024/25"]:
     if c not in df.columns: raise ValueError(f"Missing column: {c}")
