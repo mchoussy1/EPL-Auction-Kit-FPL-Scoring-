@@ -22,7 +22,7 @@ pip install -r requirements.txt
 
 # 4) Run the pipeline (in this order)
 python fpl_pull.py
-python espn_scoring.py
+python epl_scoring.py
 python auction_values.py
 python make_cheatsheets.py
 python make_draft_pack.py

@@ -25,4 +25,4 @@ out=(pts.merge(mins,on="fpl_id").merge(base[["fpl_id","full_name","position"]].d
 for s in ["2023/24","2024/25"]:
     if s not in out.columns: out[s]=0
     if f"min_{s}" not in out.columns: out[f"min_{s}"]=0
-out.to_csv("data/fpl_espn_scored.csv",index=False)
+out.to_csv("data/fpl_epl_scored.csv",index=False)
